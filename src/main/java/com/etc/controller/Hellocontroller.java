@@ -10,5 +10,14 @@ public class Hellocontroller {
         System.out.println("hello.springmvc");
         return null;
     }
+    @RequestMapping("/form.do")
+    public String form(String username,int age,String password,String[] aihao,String home){
+        System.out.println("username:"+username+"age:"+age+"password:"+password+"home:"+home);
+        for (String s:aihao
+             ) {
+            System.out.println(s);
+        }
+        return null;
+    }
 
 }
