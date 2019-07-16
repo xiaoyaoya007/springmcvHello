@@ -4,7 +4,14 @@ import com.etc.vo.Counter;
 import com.etc.vo.From;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class Hellocontroller {
 
@@ -26,11 +33,10 @@ public class Hellocontroller {
         @RequestMapping("/form.do")
     public String form(From from){
         System.out.println(from);
-        return null;
+        return "reg";
     }
 
     @RequestMapping("/counter.do")
-    @ResponseBody
     public String form(Counter counter) {
        // System.out.println(counter.getSign());
         int result=0;
@@ -50,8 +56,22 @@ public class Hellocontroller {
                 result=num1/num2;
                 break;
         }
-        return  "{\"result\":\""+result+"\"}";
-       //return "{\"result\":result}";
+        //{"result":"result"}
+        String str = "{\"result\":\""+result+"\"}";
+        return  "{\"result\":"+result+"}";
+       //return {
+        //    result:result
+        // };
+    }
+
+    //将前台传来的username转成name,(required = true)代表字段必填
+    @RequestMapping(value = "/reg.do",method = RequestMethod.POST)
+    public String reg(@RequestParam(name="password",required = true) String pass,@RequestParam(name="username",required = true) String name, HttpServletRequest request, HttpServletResponse response){
+        System.out.println(name+pass);
+        HttpSession session = request.getSession();
+        Cookie[] cookies = request.getCookies();
+
+        return "reg";
     }
 
 }
