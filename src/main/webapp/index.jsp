@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<form action="/reg.do" method="post">
+<form action="/form.do">
     username:<input name="username"><br>
     password:<input type="password" name="password"><br>
     age:<input name="age"><br>

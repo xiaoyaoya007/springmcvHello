@@ -3,6 +3,8 @@ package com.etc.controller;
 import com.etc.vo.Counter;
 import com.etc.vo.From;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +13,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class Hellocontroller {
-
 
     @RequestMapping("/hello.do")
     public String sayHello(){
@@ -31,9 +34,17 @@ public class Hellocontroller {
 //        return null;
 //    }
         @RequestMapping("/form.do")
-    public String form(From from){
+    public String form(@Valid From from, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error:allErrors
+                 ) {
+                System.out.println(error.getDefaultMessage());
+            }
+            return "fail";
+        }
         System.out.println(from);
-        return "reg";
+        return "success";
     }
 
     @RequestMapping("/counter.do")
